@@ -1,0 +1,40 @@
+---
+name: Build container image and push to registries
+
+on:
+  push:
+    branches:
+      - "main"
+  schedule:
+    - cron: "0 1 * * 0" # every sunday at 1 am
+
+env:
+  IMAGE_NAME: ansible
+
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install qemu dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-user-static
+      - name: Buildah Build
+        id: build-image
+        uses: redhat-actions/buildah-build@v2.12
+        with:
+          image: ${{ env.IMAGE_NAME }}
+          tags: latest
+          archs: amd64, arm64
+          containerfiles: |
+            ./Dockerfile
+      - name: Push to Quay.io
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image.outputs.image }}
+          tags: ${{ steps.build-image.outputs.tags }}
+          registry: quay.io/${{ secrets.QUAY_USERNAME }}
+          username: ${{ secrets.QUAY_ROBOT_ACCOUNT }}
+          password: ${{ secrets.QUAY_TOKEN }}

@@ -1,0 +1,5 @@
+---
+ignored:
+  - "DL3008" # Pin apt-get version
+  - "DL3041" # Specify version with dnf install
+  - "DL3013" # Pin versions in pip

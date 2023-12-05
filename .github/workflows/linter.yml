@@ -1,48 +1,33 @@
 ---
-#################################
-#################################
-## Super Linter GitHub Actions ##
-#################################
-#################################
 name: Lint Code Base
 
-#############################
-# Start the job on all push #
-#############################
 on:
   pull_request:
     branches: [main]
 
-###############
-# Set the Job #
-###############
 jobs:
-  build:
-    # Name the Job
+  lint:
     name: Lint Code Base
-    # Set the agent to run on
     runs-on: ubuntu-latest
-
-    ##################
-    # Load all steps #
-    ##################
+    permissions:
+      contents: read
+      pull-requests: write
+      statuses: write
     steps:
-      ##########################
-      # Checkout the code base #
-      ##########################
       - name: Checkout Code
         uses: actions/checkout@v4
+      - name: Lint Dockerfile
+        id: hadolint
+        uses: hadolint/hadolint-action@v3.1.0
         with:
-          # Full git history is needed to get a proper
-          # list of changed files within `super-linter`
-          fetch-depth: 0
+          config: ./.hadolint.yml
+          dockerfile: Dockerfile
+      - name: Print the linter report
+        uses: mshick/add-pr-comment@v2
+        if: success() || failure()
+        with:
+          status: ${{ steps.hadolint.outcome }}
+          message: |
+            ## Hadolint `${{ steps.hadolint.outcome }}`
 
-      ################################
-      # Run Linter against code base #
-      ################################
-      - name: Lint Code Base
-        uses: github/super-linter@v5
-        env:
-          VALIDATE_ALL_CODEBASE: true
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            ${{ env.HADOLINT_RESULTS }}

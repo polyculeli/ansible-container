@@ -6,7 +6,7 @@ on:
     - cron: "0 1 * * *" # every day at 1 am
 
 env:
-  IMAGE_NAME: ansible
+  IMAGE_NAME: ansible-container
 
 jobs:
   check:
@@ -47,8 +47,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            alicianibbles/ansible-container:latest
-            alicianibbles/ansible-container:devcontainer
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:devcontainer
 
   update-description:
     needs: [build]

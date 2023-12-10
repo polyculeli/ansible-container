@@ -7,7 +7,7 @@ on:
       - "main"
 
 env:
-  IMAGE_NAME: ansible
+  IMAGE_NAME: ansible-container
 
 jobs:
   build:
@@ -34,8 +34,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            alicianibbles/ansible-container:latest
-            alicianibbles/ansible-container:devcontainer
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:devcontainer
 
   update-description:
     needs: [build]

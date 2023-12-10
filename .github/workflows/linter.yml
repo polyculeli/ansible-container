@@ -21,7 +21,7 @@ jobs:
         uses: hadolint/hadolint-action@v3.1.0
         with:
           config: ./.hadolint.yml
-          dockerfile: Dockerfile
+          dockerfile: devcontainer.dockerfile
       - name: Print the linter report
         uses: mshick/add-pr-comment@v2
         if: success() || failure()

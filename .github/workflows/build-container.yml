@@ -26,4 +26,4 @@ jobs:
           tags: latest
           archs: amd64, arm64
           containerfiles: |
-            ./Dockerfile
+            ./devcontainer.dockerfile

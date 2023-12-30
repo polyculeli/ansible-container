@@ -6,5 +6,6 @@ RUN apt-get update -y \
     git \
     gnupg \
     locales-all \
+    vim \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

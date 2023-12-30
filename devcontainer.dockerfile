@@ -4,5 +4,7 @@ RUN apt-get update -y \
     && apt-get install -y \
     ansible \
     git \
+    gnupg \
+    locales-all \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

@@ -7,5 +7,6 @@ RUN apt-get update -y \
     gnupg \
     locales-all \
     vim \
+    wireguard \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

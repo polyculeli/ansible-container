@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - "main"
+    paths:
+      - "devcontainer.dockerfile"
 
 env:
   IMAGE_NAME: ansible-container

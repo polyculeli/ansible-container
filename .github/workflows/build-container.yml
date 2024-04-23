@@ -4,6 +4,7 @@ name: Check building the container image
 on:
   pull_request:
     branches: [main]
+    paths: ["devcontainer.dockerfile"]
 
 env:
   IMAGE_NAME: ansible-container

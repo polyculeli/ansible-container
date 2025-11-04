@@ -1,4 +1,4 @@
-FROM docker.io/debian:13@sha256:fd8f5a1df07b5195613e4b9a0b6a947d3772a151b81975db27d47f093f60c6e6
+FROM docker.io/debian:13@sha256:58035749da00efb7c658f01ae1ef0afbcc4399433da24096a57a005b661ded59
 
 ARG USERNAME=devcontainer
 ARG USER_UID=1000
